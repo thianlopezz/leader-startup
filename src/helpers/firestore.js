@@ -18,7 +18,7 @@ try {
 }
 
 const fs = firebase.firestore();
-fs.settings({ timestampsInSnapshots: true });
+// fs.settings({ timestampsInSnapshots: true });
 
 const storageRef = firebase.storage();
 

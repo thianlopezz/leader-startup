@@ -87,7 +87,7 @@ class HazTuPreguntaPage extends Component {
             style={{ transformOrigin: "0 0 0" }}
             {...(checked ? { timeout: 800 } : {})}
           >
-            <img src="/assets/images/startup-logo.svg" />
+            <img src="/assets/images/startup-logo.svg" className="responsive" />
           </Grow>
           <Grow
             in={checked}
