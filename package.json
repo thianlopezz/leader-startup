@@ -52,8 +52,7 @@
     "build": "npm run build-client && npm run build-server",
     "build-client": "webpack --mode production",
     "build-server": "babel API --out-dir dist/API --copy-files",
-    "start": "node ./API/index.js",
-    "postinstall": "npm run build"
+    "start": "node ./dist/API/index.js"
   },
   "keywords": [
     "React",
