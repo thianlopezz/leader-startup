@@ -60,18 +60,23 @@ class HazTuPreguntaPage extends Component {
 
   savePregunta() {
     const { savePregunta } = this.props;
+    const { pregunta } = this.state;
+
+    if (!pregunta.pregunta || pregunta.pregunta.trim().lenght === 0) {
+      this.setState({
+        openSnackbar: true,
+        snackbarMessage: "Escribe una pregunta."
+      });
+
+      return;
+    }
+
     savePregunta(this.state.pregunta, this.onSuccess);
   }
 
   render() {
-    const {
-      loading,
-      pregunta,
-      checked,
-      openSnackbar,
-      snackbarMessage
-    } = this.state;
-    const { classes } = this.props;
+    const { pregunta, checked, openSnackbar, snackbarMessage } = this.state;
+    const { loading, classes } = this.props;
 
     return (
       <Grid
@@ -125,6 +130,7 @@ class HazTuPreguntaPage extends Component {
                   <TextField
                     id="pregunta"
                     margin="dense"
+                    placeholder="Escribe tu pregunta"
                     multiline
                     rows="4"
                     rowsMax="6"
@@ -141,7 +147,9 @@ class HazTuPreguntaPage extends Component {
                     }}
                   />
                   {loading ? (
-                    <CircularProgress className={classes.progress} />
+                    <div style={{ width: "100%", textAlign: "center" }}>
+                      <CircularProgress className={classes.progress} />
+                    </div>
                   ) : (
                     <Button
                       variant="contained"
