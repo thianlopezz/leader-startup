@@ -37,7 +37,12 @@ export default function Footer() {
   return (
     <footer className={classes.footer}>
       <Container maxWidth="sm">
-        <Typography variant="body1">Built with 💙 by</Typography>
+        <Typography
+          variant="body1"
+          style={{ color: "#FFFFFF", marginBottom: 10 }}
+        >
+          Built with 💙 by
+        </Typography>
         <MadeWithLove />
       </Container>
     </footer>

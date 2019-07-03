@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Grow from "@material-ui/core/Grow";
+import Grid from "@material-ui/core/Grid";
 import SendIcon from "@material-ui/icons/Send";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SimpleSnackbar from "../components/SimpleSnackbar";
@@ -73,95 +74,100 @@ class HazTuPreguntaPage extends Component {
     const { classes } = this.props;
 
     return (
-      <section
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "40%",
-          transform: "translate(-50%, -50%)"
-        }}
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
       >
-        <Container fixed>
-          <Grow
-            in={checked}
-            style={{ transformOrigin: "0 0 0" }}
-            {...(checked ? { timeout: 800 } : {})}
-          >
-            <img src="/assets/images/startup-logo.svg" className="responsive" />
-          </Grow>
-          <Grow
-            in={checked}
-            style={{ transformOrigin: "0 0 0" }}
-            {...(checked ? { timeout: 1000 } : {})}
-          >
-            <Typography
-              variant="h1"
-              component="h2"
-              style={{ color: "#3456A5", textAlign: "center" }}
-              gutterBottom
+        <Grid item xs={12}>
+          <section>
+            <Grow
+              in={checked}
+              style={{ transformOrigin: "0 0 0" }}
+              {...(checked ? { timeout: 800 } : {})}
             >
-              ¡Haz tu pregunta!
-            </Typography>
-          </Grow>
-          <Grow
-            in={checked}
-            style={{ transformOrigin: "0 0 0" }}
-            {...(checked ? { timeout: 1500 } : {})}
-          >
-            <Card style={{ backgroundColor: "#23272A" }}>
+              <img
+                src="/assets/images/startup-logo.svg"
+                className="responsive"
+              />
+            </Grow>
+            <Grow
+              in={checked}
+              style={{ transformOrigin: "0 0 0" }}
+              {...(checked ? { timeout: 1000 } : {})}
+            >
               <Typography
-                variant="h4"
-                component="h5"
-                style={{ color: "#FFFFFF", margin: "15px" }}
+                variant="h2"
+                component="h3"
+                style={{ color: "#3456A5", textAlign: "center" }}
+                gutterBottom
               >
-                ¿Qué pregunta quieres hacer?
+                <strong>¡Haz tu pregunta!</strong>
               </Typography>
-              <CardContent>
-                <TextField
-                  id="pregunta"
-                  margin="dense"
-                  multiline
-                  rows="4"
-                  rowsMax="6"
-                  fullWidth
-                  color="primary"
-                  value={pregunta.pregunta}
-                  onChange={e =>
-                    this.setState({
-                      pregunta: { pregunta: e.target.value }
-                    })
-                  }
-                  InputProps={{
-                    className: classes.input
-                  }}
-                />
-                {loading ? (
-                  <CircularProgress className={classes.progress} />
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    aria-label="Add"
+            </Grow>
+            <Grow
+              in={checked}
+              style={{ transformOrigin: "0 0 0" }}
+              {...(checked ? { timeout: 1500 } : {})}
+            >
+              <Card style={{ backgroundColor: "#23272A" }}>
+                <Typography
+                  variant="h4"
+                  component="h5"
+                  style={{ color: "#FFFFFF", margin: "15px" }}
+                >
+                  ¿Qué pregunta quieres hacer?
+                </Typography>
+                <CardContent>
+                  <TextField
+                    id="pregunta"
+                    margin="dense"
+                    multiline
+                    rows="4"
+                    rowsMax="6"
                     fullWidth
-                    onClick={this.savePregunta.bind(this)}
-                  >
-                    Enviar
-                    <SendIcon className={classes.extendedIcon} />
-                  </Button>
-                )}
-              </CardContent>
-              {/* <CardActions>
+                    color="primary"
+                    value={pregunta.pregunta}
+                    onChange={e =>
+                      this.setState({
+                        pregunta: { pregunta: e.target.value }
+                      })
+                    }
+                    InputProps={{
+                      className: classes.input
+                    }}
+                  />
+                  {loading ? (
+                    <CircularProgress className={classes.progress} />
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      aria-label="Add"
+                      fullWidth
+                      onClick={this.savePregunta.bind(this)}
+                    >
+                      Enviar
+                      <SendIcon className={classes.extendedIcon} />
+                    </Button>
+                  )}
+                </CardContent>
+                {/* <CardActions>
               <Button size="small">Learn More</Button>
             </CardActions> */}
-            </Card>
-          </Grow>
-        </Container>
+              </Card>
+            </Grow>
+          </section>
+        </Grid>
         <SimpleSnackbar
           open={openSnackbar}
           onClose={() => this.setState({ openSnackbar: false })}
           message={snackbarMessage}
         />
-      </section>
+      </Grid>
     );
   }
 }

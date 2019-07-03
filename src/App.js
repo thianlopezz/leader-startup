@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <div style={{ minHeight: "90vh" }} className="app">
+        <div className="app">
           <Switch>
             <Route exact path="/" component={HazTuPreguntaPage} />
             <Route exact path="/hello" component={HelloWorld} />
