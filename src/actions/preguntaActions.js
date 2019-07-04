@@ -1,16 +1,16 @@
-export const helloWorldAction2 = (query, preguntas) => {
+export const filtrarPreguntas = (query, preguntas) => {
   preguntas = preguntas.filter(pregunta => {
     let index = pregunta.pregunta.indexOf(query);
 
-    if (index !== -1) {
+    if (query === undefined || index !== -1) {
       return true;
     }
 
-    return preguntas;
+    return false;
   });
 
   return {
-    type: "HELLO_2",
+    type: "SET_FILTERED",
     preguntas
   };
 };

@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 
 import "./styles/index.scss";
 import Footer from "./components/Footer";
+import PreguntasPage from "./pages/PreguntasPage";
 
 const theme = createMuiTheme({
   palette: {
@@ -28,7 +29,11 @@ class App extends Component {
         <div className="app">
           <Switch>
             <Route exact path="/" component={HazTuPreguntaPage} />
-            <Route exact path="/hello" component={HelloWorld} />
+            <Route
+              exact
+              path="/nobody-should-know-this-url"
+              component={PreguntasPage}
+            />
             <Route
               component={() => {
                 return <h1>404 NOT FOUND</h1>;

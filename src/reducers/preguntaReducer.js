@@ -1,17 +1,22 @@
 let defaultState = {
   loadingList: false,
   loading: false,
-  preguntas: []
+  preguntas: [],
+  preguntasFiltradas: []
 };
 
 const preguntaReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case "SET_FILTERED":
+      return { ...state, preguntasFiltradas: action.preguntas };
     case "PREGUNTA_LOAD":
       return { ...state, loadingList: true };
     case "PREGUNTA_LOAD_SUCCESS":
       return {
         ...state,
-        loading: false
+        loading: false,
+        preguntas: action.preguntas,
+        preguntasFiltradas: action.preguntas
       };
     case "PREGUNTA_LOAD_ERROR":
       return {
