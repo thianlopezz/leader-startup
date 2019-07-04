@@ -127,7 +127,7 @@ class PreguntasPage extends Component {
                     //   </IconButton>
                     // }
                     title={moment(pregunta.feCreacion).format("MMMM DD YYYY")}
-                    // subheader={moment(pregunta.feCreacion).format()}
+                    subheader={moment(pregunta.feCreacion).format("hh:mm a")}
                   />
                   <CardContent>
                     <Typography
