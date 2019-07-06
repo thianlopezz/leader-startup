@@ -12,8 +12,8 @@ const reduxDevTools =
 const store = createStore(
   reducers,
   compose(
-    applyMiddleware(sagaMiddleware),
-    reduxDevTools
+    applyMiddleware(sagaMiddleware)
+    // reduxDevTools
   )
 );
 

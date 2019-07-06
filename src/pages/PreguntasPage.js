@@ -77,7 +77,6 @@ class PreguntasPage extends Component {
   }
 
   updateRespuesta(index, respuesta) {
-    debugger;
     const { updateRespuesta, preguntas } = this.props;
     updateRespuesta(index, respuesta, preguntas);
   }
@@ -174,6 +173,7 @@ class PreguntasPage extends Component {
                       placeholder="Notas"
                       multiline
                       rows="1"
+                      rowsMax="20"
                       fullWidth
                       // color="primary"
                       value={pregunta.respuesta}
