@@ -18,3 +18,12 @@ export const filtrarPreguntas = (query, preguntas) => {
     preguntas
   };
 };
+
+export const updateRespuesta = (index, respuesta, preguntas) => {
+  preguntas[index].respuesta = respuesta;
+
+  return {
+    type: "SET_FILTERED",
+    preguntas
+  };
+};

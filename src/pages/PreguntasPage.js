@@ -7,8 +7,10 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
+import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
 
-import { filtrarPreguntas } from "../actions/preguntaActions";
+import { filtrarPreguntas, updateRespuesta } from "../actions/preguntaActions";
 
 import {
   CardHeader,
@@ -17,7 +19,8 @@ import {
   CardActions,
   InputBase,
   Paper,
-  IconButton
+  IconButton,
+  TextField
 } from "@material-ui/core";
 import moment from "moment";
 import ShowMoreText from "react-show-more-text";
@@ -38,8 +41,7 @@ const styles = theme => {
       color: "#FFFFFF"
     },
     iconButton: {
-      padding: 10,
-      color: "#FFFFFF"
+      padding: 10
     },
     margin: {
       margin: theme.spacing(1)
@@ -61,6 +63,8 @@ class PreguntasPage extends Component {
 
     // this.onSuccess = this.onSuccess.bind(this);
     this.filtrar = this.filtrar.bind(this);
+    this.updateRespuesta = this.updateRespuesta.bind(this);
+    this.updatePregunta = this.updatePregunta.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +74,22 @@ class PreguntasPage extends Component {
   filtrar(e) {
     const { preguntas, filtrar } = this.props;
     filtrar(e.target.value, preguntas);
+  }
+
+  updateRespuesta(index, respuesta) {
+    debugger;
+    const { updateRespuesta, preguntas } = this.props;
+    updateRespuesta(index, respuesta, preguntas);
+  }
+
+  updatePregunta(pregunta) {
+    const { updatePregunta } = this.props;
+    updatePregunta(pregunta);
+  }
+
+  deletePregunta(_idPregunta) {
+    const { deletePregunta } = this.props;
+    deletePregunta(_idPregunta);
   }
 
   //   onSuccess() {
@@ -83,7 +103,7 @@ class PreguntasPage extends Component {
   render() {
     // const { preguntas } = this.state;
     const { loadingList, preguntasFiltradas: preguntas, classes } = this.props;
-    debugger;
+
     return (
       <section>
         <Container fixed style={{ minHeight: "90vh" }}>
@@ -109,8 +129,8 @@ class PreguntasPage extends Component {
             </Paper>
           </Grid>
           <Grid container spacing={3}>
-            {preguntas.map(pregunta => (
-              <Grid item xs={12} xl={6} spacing={3}>
+            {preguntas.map((pregunta, index) => (
+              <Grid key={pregunta._id} item xs={12} xl={6}>
                 <Card className={classes.card}>
                   <CardHeader
                     // avatar={
@@ -121,11 +141,14 @@ class PreguntasPage extends Component {
                     //     R
                     //   </Avatar>
                     // }
-                    // action={
-                    //   <IconButton aria-label="Settings">
-                    //     <MoreVertIcon />
-                    //   </IconButton>
-                    // }
+                    action={
+                      <IconButton
+                        aria-label="Settings"
+                        onClick={this.deletePregunta.bind(this, pregunta._id)}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    }
                     title={moment(pregunta.feCreacion).format("MMMM DD YYYY")}
                     subheader={moment(pregunta.feCreacion).format("hh:mm a")}
                   />
@@ -144,19 +167,49 @@ class PreguntasPage extends Component {
                         {pregunta.pregunta}
                       </ShowMoreText>
                     </Typography>
+                    <TextField
+                      id={pregunta._id}
+                      margin="dense"
+                      placeholder="Notas"
+                      multiline
+                      rows="1"
+                      fullWidth
+                      // color="primary"
+                      value={pregunta.respuesta}
+                      onChange={e =>
+                        this.updateRespuesta(index, e.target.value)
+                      }
+                      // InputProps={{
+                      //   className: classes.input
+                      // }}
+                    />
                   </CardContent>
                   <CardActions disableSpacing>
                     <FormControlLabel
                       control={
                         <Switch
-                          checked={true}
-                          onChange={() => {}}
-                          value="checkedB"
+                          checked={pregunta.marcada}
+                          onChange={() =>
+                            this.updatePregunta({
+                              ...pregunta,
+                              marcada: !pregunta.marcada
+                            })
+                          }
+                          value={pregunta.marcada}
                           color="primary"
                         />
                       }
                       label="Marcar"
                     />
+                    <IconButton
+                      key="guardar"
+                      aria-label="Guardar"
+                      color="primary"
+                      className={classes.iconButton}
+                      onClick={() => this.updatePregunta(pregunta)}
+                    >
+                      <SaveIcon />
+                    </IconButton>
                   </CardActions>
                 </Card>
               </Grid>
@@ -177,7 +230,12 @@ const mapDispatchToProps = dispatch => {
   return {
     listenForPreguntas: () => dispatch({ type: "PREGUNTAS_LISTEN" }),
     marcar: _id => dispatch({ type: "PREGUNTA_MARCAR", _id }),
-    filtrar: (query, preguntas) => dispatch(filtrarPreguntas(query, preguntas))
+    filtrar: (query, preguntas) => dispatch(filtrarPreguntas(query, preguntas)),
+    updateRespuesta: (index, respuesta, preguntas) =>
+      dispatch(updateRespuesta(index, respuesta, preguntas)),
+    updatePregunta: pregunta => dispatch({ type: "PREGUNTA_UPDATE", pregunta }),
+    deletePregunta: _idPregunta =>
+      dispatch({ type: "PREGUNTA_DELETE", _idPregunta })
   };
 };
 

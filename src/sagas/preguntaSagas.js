@@ -38,6 +38,20 @@ const savePregunta = pregunta => {
     .add({ ...pregunta, feCreacion: moment().toDate() });
 };
 
+const updatePregunta = pregunta => {
+  return fs
+    .collection("preguntas")
+    .doc(pregunta._id)
+    .set(pregunta);
+};
+
+const deletePregunta = _idPregunta => {
+  return fs
+    .collection("preguntas")
+    .doc(_idPregunta)
+    .delete();
+};
+
 export function* listenForPreguntasSagas() {
   yield fork(listenForPreguntas);
 }
@@ -53,5 +67,41 @@ export function* savePreguntaSagas(action) {
     yield put({ type: "PREGUNTA_SAVE_SUCCESS" });
   } catch (error) {
     yield put({ type: "PREGUNTA_SAVE_ERROR", message: error.message, error });
+  }
+}
+
+export function* updatePreguntaSagas(action) {
+  try {
+    yield call(updatePregunta, action.pregunta);
+
+    if (action.success) {
+      action.success();
+    }
+
+    yield put({ type: "PREGUNTA_UPDATE_SUCCESS" });
+  } catch (error) {
+    yield put({
+      type: "PREGUNTA_UPDATE_ERROR",
+      message: error.message,
+      error
+    });
+  }
+}
+
+export function* deltePreguntaSagas(action) {
+  try {
+    yield call(deletePregunta, action._idPregunta);
+
+    if (action.success) {
+      action.success();
+    }
+
+    yield put({ type: "PREGUNTA_DELETE_SUCCESS" });
+  } catch (error) {
+    yield put({
+      type: "PREGUNTA_DELETE_ERROR",
+      message: error.message,
+      error
+    });
   }
 }

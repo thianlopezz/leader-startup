@@ -8,7 +8,7 @@ let defaultState = {
 const preguntaReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "SET_FILTERED":
-      return { ...state, preguntasFiltradas: action.preguntas };
+      return { ...state, preguntasFiltradas: [...action.preguntas] };
     case "PREGUNTA_LOAD":
       return { ...state, loadingList: true };
     case "PREGUNTA_LOAD_SUCCESS":
@@ -36,6 +36,40 @@ const preguntaReducer = (state = defaultState, action) => {
         loading: false
       };
     case "PREGUNTA_SAVE_ERROR":
+      return {
+        ...state,
+        loading: false,
+        message: action.message,
+        error: action.error
+      };
+    case "PREGUNTA_DELETE":
+      return {
+        ...state,
+        loading: true
+      };
+    case "PREGUNTA_DELETE_SUCCESS":
+      return {
+        ...state,
+        loading: false
+      };
+    case "PREGUNTA_DELETE_ERROR":
+      return {
+        ...state,
+        loading: false,
+        message: action.message,
+        error: action.error
+      };
+    case "PREGUNTA_UPDATE":
+      return {
+        ...state,
+        loading: true
+      };
+    case "PREGUNTA_UPDATE_SUCCESS":
+      return {
+        ...state,
+        loading: false
+      };
+    case "PREGUNTA_UPDATE_ERROR":
       return {
         ...state,
         loading: false,
