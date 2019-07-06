@@ -101,7 +101,12 @@ class PreguntasPage extends Component {
 
   render() {
     // const { preguntas } = this.state;
-    const { loadingList, preguntasFiltradas: preguntas, classes } = this.props;
+    const {
+      loadingList,
+      preguntasFiltradas: preguntas,
+      preguntasEliminadas,
+      classes
+    } = this.props;
 
     return (
       <section>
@@ -216,6 +221,105 @@ class PreguntasPage extends Component {
               </Grid>
             ))}
           </Grid>
+          <Typography
+            style={{ marginBottom: "10" }}
+            variant="h2"
+            color="primary"
+            component="h3"
+          >
+            <br />
+            Preguntas Eliminadas({preguntasEliminadas.length})
+            <br />
+            <Grid container spacing={3}>
+              {preguntasEliminadas.map((pregunta, index) => (
+                <Grid key={pregunta._id} item xs={12} xl={6}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      // avatar={
+                      //   <Avatar
+                      //     aria-label="Recipe"
+                      //     className={classes.avatar}
+                      //   >
+                      //     R
+                      //   </Avatar>
+                      // }
+                      // action={
+                      //   <IconButton
+                      //     aria-label="Settings"
+                      //     onClick={this.deletePregunta.bind(this, pregunta._id)}
+                      //   >
+                      //     <CloseIcon />
+                      //   </IconButton>
+                      // }
+                      title={moment(pregunta.feCreacion).format("MMMM DD YYYY")}
+                      subheader={moment(pregunta.feCreacion).format("hh:mm a")}
+                    />
+                    <CardContent>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        <ShowMoreText
+                          lines={3}
+                          more="Más"
+                          less="Menos"
+                          anchorClass=""
+                        >
+                          {pregunta.pregunta}
+                        </ShowMoreText>
+                      </Typography>
+                      {/* <TextField
+                        id={pregunta._id}
+                        margin="dense"
+                        placeholder="Notas"
+                        multiline
+                        rows="1"
+                        rowsMax="20"
+                        fullWidth
+                        contentEditable={false}
+                        value={pregunta.respuesta}
+                        onChange={e =>
+                          this.updateRespuesta(index, e.target.value)
+                        }
+                        InputProps={{
+                          className: classes.input
+                        }}
+                      /> */}
+                    </CardContent>
+                    {/* <CardActions disableSpacing>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={pregunta.marcada}
+                            // onChange={() =>
+                            //   this.updatePregunta({
+                            //     ...pregunta,
+                            //     marcada: !pregunta.marcada
+                            //   })
+                            // }
+                            value={pregunta.marcada}
+                            color="primary"
+                          />
+                        }
+                        label="Marcar"
+                      />
+                      <IconButton
+                        key="guardar"
+                        aria-label="Guardar"
+                        color="primary"
+                        contentEditable={false}
+                        className={classes.iconButton}
+                        // onClick={() => this.updatePregunta(pregunta)}
+                      >
+                        <SaveIcon />
+                      </IconButton>
+                    </CardActions> */}
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Typography>
         </Container>
       </section>
     );
@@ -224,7 +328,16 @@ class PreguntasPage extends Component {
 
 const mapStateToProps = state => {
   let { loadingList, preguntas, preguntasFiltradas } = state.preguntaState;
-  return { loadingList, preguntas, preguntasFiltradas };
+
+  let preguntasEliminadas = preguntasFiltradas.filter(
+    pregunta => pregunta.isDeleted
+  );
+
+  preguntasFiltradas = preguntasFiltradas.filter(
+    pregunta => pregunta.isDeleted == undefined
+  );
+
+  return { loadingList, preguntas, preguntasFiltradas, preguntasEliminadas };
 };
 
 const mapDispatchToProps = dispatch => {

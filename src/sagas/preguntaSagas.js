@@ -49,7 +49,7 @@ const deletePregunta = _idPregunta => {
   return fs
     .collection("preguntas")
     .doc(_idPregunta)
-    .delete();
+    .update({ isDeleted: true });
 };
 
 export function* listenForPreguntasSagas() {
