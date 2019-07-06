@@ -113,8 +113,9 @@ class PreguntasPage extends Component {
             color="primary"
             component="h3"
           >
-            Preguntas
+            Preguntas({preguntas.length})
           </Typography>
+          <br />
           <Grid container spacing={3}>
             <Paper className={classes.root}>
               <InputBase
