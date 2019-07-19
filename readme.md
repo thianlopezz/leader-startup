@@ -1,9 +1,13 @@
-# REACT REDUX SAGAS NODEJS ECMAScript 6 BASED
+# LEADER STARTUP
 
-Little scaffold for React Redux Sagas NodeJs and express with ECMAScript 6.
+Little real time React-Firestore based app, where you can ask questions for a forum, you can see this app working [here](https://leader-startup.herokuapp.com/ "Google's Homepage"), you can see the questions [here](https://leader-startup.herokuapp.com/nobody-should-know-this-url "Google's Homepage").
 
-## To run
+## To run`
 
-Just run `npm run dev`.
+1. Go to **firestore.js** and configure your Firestore credentials, you can get this from Google Firebase.
+2. Excecute `npm install` to get all the dependencies.
+3. And run with `npm start`.
 
-_Don't forget to `npm install` before._
+## Enjoy 😎
+
+[Thian López](https://thianlopezz.com "thianlopezz.com")
