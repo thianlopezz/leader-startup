@@ -3,13 +3,13 @@ import "firebase/storage";
 
 try {
   firebase.initializeApp({
-    apiKey: "AIzaSyAXYwZi6HqXypf5nrTeozXgy8JyC8ZGjHc",
-    authDomain: "leader-startup.firebaseapp.com",
-    databaseURL: "https://leader-startup.firebaseio.com",
-    projectId: "leader-startup",
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
     storageBucket: "",
-    messagingSenderId: "435739456455",
-    appId: "1:435739456455:web:1e372a1faafce00a"
+    messagingSenderId: "",
+    appId: ""
   });
 } catch (err) {
   if (!/already exists/.test(err.message)) {
