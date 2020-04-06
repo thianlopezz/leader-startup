@@ -14,7 +14,7 @@ function MadeWithLove() {
     >
       <Link target="_blank" color="inherit" href="https://www.ecudevs.com/">
         <img
-          src="https://www.ecudevs.com/assets/logo/ecudevsp.png"
+          src="https://www.ecudevs.com/images/logo.svgnp"
           width="200px"
         />
       </Link>
