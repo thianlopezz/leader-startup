@@ -14,6 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import SimpleSnackbar from "../components/SimpleSnackbar";
 import logo from "../assets/images/startup-logo.svg";
 import { Link } from "@material-ui/core";
+import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
 
 const styles = (theme) => {
   return {
@@ -174,7 +175,7 @@ class HazTuPreguntaPage extends Component {
               {...(checked ? { timeout: 1500 } : {})}
             >
               <section style={{ paddingTop: "1rem", textAlign:'center' }}>
-                <Link href="/nobody-should-know-this-url">
+                <Link component={RouterLink} to="/nobody-should-know-this-url">
                   <Typography
                     variant="h6"
                     component="h6"
