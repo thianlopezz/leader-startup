@@ -12,22 +12,23 @@ import Grid from "@material-ui/core/Grid";
 import SendIcon from "@material-ui/icons/Send";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SimpleSnackbar from "../components/SimpleSnackbar";
-import logo from '../assets/images/startup-logo.svg';
+import logo from "../assets/images/startup-logo.svg";
+import { Link } from "@material-ui/core";
 
-const styles = theme => {
+const styles = (theme) => {
   return {
     input: {
-      color: "#FFFFFF"
+      color: "#FFFFFF",
     },
     margin: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     extendedIcon: {
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
     progress: {
-      margin: theme.spacing(2)
-    }
+      margin: theme.spacing(2),
+    },
   };
 };
 
@@ -36,7 +37,7 @@ class HazTuPreguntaPage extends Component {
     pregunta: {},
     checked: false,
     openSnackbar: false,
-    snackbarMessage: ""
+    snackbarMessage: "",
   };
 
   constructor(props) {
@@ -55,7 +56,7 @@ class HazTuPreguntaPage extends Component {
     this.setState({
       pregunta: { pregunta: "" },
       openSnackbar: true,
-      snackbarMessage: "Pregunta enviada correctamente."
+      snackbarMessage: "Pregunta enviada correctamente.",
     });
   }
 
@@ -66,7 +67,7 @@ class HazTuPreguntaPage extends Component {
     if (!pregunta.pregunta || pregunta.pregunta.trim().length === 0) {
       this.setState({
         openSnackbar: true,
-        snackbarMessage: "Escribe una pregunta."
+        snackbarMessage: "Escribe una pregunta.",
       });
 
       return;
@@ -95,10 +96,7 @@ class HazTuPreguntaPage extends Component {
               style={{ transformOrigin: "0 0 0" }}
               {...(checked ? { timeout: 800 } : {})}
             >
-              <img
-                src={logo}
-                className="responsive"
-              />
+              <img src={logo} className="responsive" />
             </Grow>
             <Grow
               in={checked}
@@ -138,13 +136,13 @@ class HazTuPreguntaPage extends Component {
                     fullWidth
                     color="primary"
                     value={pregunta.pregunta}
-                    onChange={e =>
+                    onChange={(e) =>
                       this.setState({
-                        pregunta: { pregunta: e.target.value }
+                        pregunta: { pregunta: e.target.value },
                       })
                     }
                     InputProps={{
-                      className: classes.input
+                      className: classes.input,
                     }}
                   />
                   {loading ? (
@@ -169,6 +167,24 @@ class HazTuPreguntaPage extends Component {
             </CardActions> */}
               </Card>
             </Grow>
+
+            <Grow
+              in={checked}
+              style={{ transformOrigin: "0 0 0" }}
+              {...(checked ? { timeout: 1500 } : {})}
+            >
+              <section style={{ paddingTop: "1rem", textAlign:'center' }}>
+                <Link href="/nobody-should-know-this-url">
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    style={{ color: "#FFFFFF" }}
+                  >
+                    Ver preguntas
+                  </Typography>
+                </Link>
+              </section>
+            </Grow>
           </section>
         </Grid>
         <SimpleSnackbar
@@ -181,15 +197,15 @@ class HazTuPreguntaPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   let { loading } = state.preguntaState;
   return { loading };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     savePregunta: (pregunta, success) =>
-      dispatch({ type: "PREGUNTA_SAVE", pregunta, success })
+      dispatch({ type: "PREGUNTA_SAVE", pregunta, success }),
   };
 };
 
