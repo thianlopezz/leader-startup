@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import SendIcon from "@material-ui/icons/Send";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SimpleSnackbar from "../components/SimpleSnackbar";
+import logo from '../assets/images/startup-logo.svg';
 
 const styles = theme => {
   return {
@@ -62,7 +63,7 @@ class HazTuPreguntaPage extends Component {
     const { savePregunta } = this.props;
     const { pregunta } = this.state;
 
-    if (!pregunta.pregunta || pregunta.pregunta.trim().lenght === 0) {
+    if (!pregunta.pregunta || pregunta.pregunta.trim().length === 0) {
       this.setState({
         openSnackbar: true,
         snackbarMessage: "Escribe una pregunta."
@@ -95,7 +96,7 @@ class HazTuPreguntaPage extends Component {
               {...(checked ? { timeout: 800 } : {})}
             >
               <img
-                src="/assets/images/startup-logo.svg"
+                src={logo}
                 className="responsive"
               />
             </Grow>

@@ -2,24 +2,31 @@ import moment from "moment";
 import { call, put, take, fork } from "redux-saga/effects";
 import { eventChannel } from "redux-saga";
 
-import fs from "../helpers/firestore";
+import db from "../helpers/firestore";
+import {
+  doc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+  addDoc
+} from "firebase/firestore";
 
 function* listenForPreguntas() {
-  const channel = new eventChannel(emiter => {
-    const unsubscribe = fs
-      .collection(`/preguntas`)
-      .orderBy("feCreacion", "desc")
-      .onSnapshot(querySnapshot => {
-        emiter({
-          data: querySnapshot.docs.map(item => {
-            return {
-              ...item.data(),
-              _id: item.id,
-              feCreacion: item.data().feCreacion.toDate()
-            };
-          })
-        });
+  const channel = new eventChannel((emiter) => {
+    const q = query(collection(db, "preguntas"), orderBy("feCreacion", "desc"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      emiter({
+        data: querySnapshot.docs.map((doc) => {
+          return {
+            ...doc.data(),
+            _id: doc.id,
+            feCreacion: doc.data().feCreacion.toDate(),
+          };
+        }),
       });
+    });
 
     return () => {
       unsubscribe();
@@ -32,24 +39,25 @@ function* listenForPreguntas() {
   }
 }
 
-const savePregunta = pregunta => {
-  return fs
-    .collection("preguntas")
-    .add({ ...pregunta, feCreacion: moment().toDate() });
+const savePregunta = (pregunta) => {
+  debugger;
+  return addDoc(collection(db, "preguntas"), {
+    ...pregunta,
+    feCreacion: moment().toDate(),
+  });
 };
 
-const updatePregunta = pregunta => {
-  return fs
-    .collection("preguntas")
-    .doc(pregunta._id)
-    .set(pregunta);
+const updatePregunta = (pregunta) => {
+  debugger;
+  const preguntaRef = doc(db, "preguntas", pregunta._id);
+  return updateDoc(preguntaRef, {
+    ...pregunta,
+  });
 };
 
-const deletePregunta = _idPregunta => {
-  return fs
-    .collection("preguntas")
-    .doc(_idPregunta)
-    .update({ isDeleted: true });
+const deletePregunta = (_idPregunta) => {
+  const preguntaRef = doc(db, "preguntas", _idPregunta);
+  return updateDoc(preguntaRef, { isDeleted: true });
 };
 
 export function* listenForPreguntasSagas() {
@@ -83,7 +91,7 @@ export function* updatePreguntaSagas(action) {
     yield put({
       type: "PREGUNTA_UPDATE_ERROR",
       message: error.message,
-      error
+      error,
     });
   }
 }
@@ -101,7 +109,7 @@ export function* deltePreguntaSagas(action) {
     yield put({
       type: "PREGUNTA_DELETE_ERROR",
       message: error.message,
-      error
+      error,
     });
   }
 }

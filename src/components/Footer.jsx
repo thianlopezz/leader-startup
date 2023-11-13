@@ -12,9 +12,9 @@ function MadeWithLove() {
       color="textSecondary"
       style={{ textAlign: "center" }}
     >
-      <Link target="_blank" color="inherit" href="https://www.ecudevs.com/">
+      <Link target="_blank" color="inherit" href="https://ecudevs.thianlopezz.com/">
         <img
-          src="https://www.ecudevs.com/images/logo.svgnp"
+          src="https://ecudevs.thianlopezz.com/images/logo.svg"
           width="200px"
         />
       </Link>
